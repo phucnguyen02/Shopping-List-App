@@ -1,0 +1,29 @@
+#title{
+    color: red;
+}
+
+#insertRequest{
+    font-size: 24px;
+}
+
+#insertButton{
+    color: green;
+    cursor: pointer;
+}
+
+.displayItems{
+    display: flex;
+    align-items: center;
+    padding-left: 25px;
+    list-style: none;
+    text-align: center;
+}
+
+.icons{
+    padding: 0 1rem;
+    cursor: pointer;
+    height: 100%;
+    justify-content: center;
+}
+
+
