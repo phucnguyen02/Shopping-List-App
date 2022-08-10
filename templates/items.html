@@ -15,7 +15,6 @@
 </head>
 <body>
     <h1 id = "title">Shopping List Items</h1>
-    <meta id="my-data" data-name= "{{all_data}}">
     
     <div id = "searchBox">
         <span>Search for an item:</span>
@@ -23,25 +22,29 @@
         <input type = "submit" onclick = "submitSearchItem()">
     </div>
 
-    {% if all_data is defined and all_data %}
-        {% for item in all_data %}
-            <div id = "menu{{ item[:item.index('/')] }}" class = "displayItems">
-                <ul>
-                    <li><span class = "itemName" id = "item{{ item[:item.index('/')] }}">{{ item[item.index(':')+2:] }}</span></li>
-                </ul>
-                <div class = "icons">
-                    <i onclick="showEditInput(this)" id = "editIcon{{ item[:item.index('/')] }}" class="fa fa-pencil-alt"></i>
-                    <i onclick="removeItem(this)" id = "remIcon{{ item[:item.index('/')] }}" class="fa fa-trash"></i>
+    <div id = "renderItems">
+
+        {% if all_data is defined and all_data %}
+            {% for item in all_data %}
+                <div id = "menu{{ item[:item.index('/')] }}" class = "displayItems">
+                    <ul>
+                        <li><span class = "itemName" id = "item{{ item[:item.index('/')] }}">{{ item[item.index(':')+2:] }}</span></li>
+                    </ul>
+                    <div class = "icons">
+                        <i onclick="showEditInput(this)" id = "editIcon{{ item[:item.index('/')] }}" class="fa fa-pencil-alt"></i>
+                        <i onclick="removeItem(this)" id = "remIcon{{ item[:item.index('/')] }}" class="fa fa-trash"></i>
+                    </div>
+                    <div id = "inputEditBox{{ item[:item.index('/')] }}" style = "display: none;">
+                        <label for = "editItem{{ item[item.index('/')] }}">New List Name:</label>
+                        <input type = "text" id = "editItem{{ item[:item.index('/')] }}">
+                        <input type = "submit" onclick = "editItem(this)" id = "submit{{ item[:item.index('/')] }}">
+                    </div>
                 </div>
-                <div id = "inputEditBox{{ item[:item.index('/')] }}" style = "display: none;">
-                    <label for = "editItem{{ item[item.index('/')] }}">New List Name:</label>
-                    <input type = "text" id = "editItem{{ item[:item.index('/')] }}">
-                    <input type = "submit" onclick = "editItem(this)" id = "submit{{ item[:item.index('/')] }}">
-                </div>
-            </div>
-            <br>
-        {% endfor %}
-    {% endif %} 
+                <br>
+            {% endfor %}
+        {% endif %} 
+
+    </div>
 
     <div id = "insertRequest">
         <i onclick="showInsertInput()" id = "insertButton" class="fa fa-plus-circle"></i>

@@ -55,8 +55,8 @@ def edit_list():
     new_name = request.get_json()[0]['newName']
     cursor.execute("""UPDATE shopping_lists
                   SET name= :rename
-                  WHERE item_id = :id""", {'rename': new_name,
-                                           'id': id})
+                  WHERE id = :id""", {'rename': new_name,
+                                      'id': id})
     db.commit()
     data = get_db()
     return render_template("index.html", all_data=data)

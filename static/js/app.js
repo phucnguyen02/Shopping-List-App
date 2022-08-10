@@ -1,14 +1,27 @@
+//Display insert input menu on button click
 function showInsertInput() {
   var x = document.getElementById("inputInsertBox");
   x.style.display = (x.style.display != 'none' ? 'none' : 'block');
 }
 
+
+//Display edit input menu on button click
 function showEditInput(obj) {
   var list_id = "inputEditBox" + findID(obj.id);
   var x = document.getElementById(list_id);
   x.style.display = (x.style.display != 'none' ? 'none' : 'block');
 }
 
+//Find the number ID portion of an ID string
+function findID(str){
+  var first_num = 0;
+  for(let i = str.length - 1; i >= 0; i--)
+    if(!isNaN(str[i]))
+      first_num = i;
+  return str.slice(first_num);
+}
+
+//Sends the inputted name to the server to update the database, and then updates the website
 function submitInsertList(){
   var name = document.getElementById("insertList").value;
   var server_data = [{"name": name}];
@@ -18,19 +31,29 @@ function submitInsertList(){
     data: JSON.stringify(server_data),
     contentType: "application/json",
     success: function (result) {
-      $("html").html(result);
+      $("#renderLists").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderLists").innerHTML);
     }
   });
 }
 
-function findID(str){
-  var first_num = 0;
-  for(let i = str.length - 1; i >= 0; i--)
-    if(!isNaN(str[i]))
-      first_num = i;
-  return str.slice(first_num);
+//Sends the inputted name to the server to update the database, and then updates the website
+function submitInsertItem(){
+  const urlParams = new URLSearchParams(window.location.search);
+  var id = urlParams.get("id");
+  var name = document.getElementById("insertItem").value;
+  var server_data = [{"name": name, "id": id}];
+  $.ajax({
+    type: "POST",
+    url: "/add_item",
+    data: JSON.stringify(server_data),
+    contentType: "application/json",
+    success: function (result) {
+      $("#renderItems").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderItems").innerHTML);
+    }
+  });
 }
 
+//Sends the inputted name and list ID to the server to update the database, and then updates the website
 function editList(obj){
   var id = findID(obj.id);
   var newName = document.getElementById("editList" + id).value;
@@ -43,11 +66,14 @@ function editList(obj){
       url: "/edit_list",
       data: JSON.stringify(server_data),
       contentType: "application/json",
-      dataType: 'json' 
+      success: function (result) {
+        $("#renderLists").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderLists").innerHTML);
+      }
     });
   }
 }
 
+//Sends the inputted name and item ID to the server to update the database, and then updates the website
 function editItem(obj){
   var item_id = findID(obj.id);
   const urlParams = new URLSearchParams(window.location.search);
@@ -63,12 +89,13 @@ function editItem(obj){
       data: JSON.stringify(server_data),
       contentType: "application/json",
       success: function (result) {
-        $("html").html(result);
+        $("#renderItems").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderItems").innerHTML);
       }
     });
   }
 }
 
+//Sends the removed list ID to the server to update the database, and then updates the website
 function removeList(obj){
   var id = findID(obj.id);
   var server_data = [{"id": id}];
@@ -78,11 +105,12 @@ function removeList(obj){
     data: JSON.stringify(server_data),
     contentType: "application/json",
     success: function (result) {
-      $("html").html(result);
+      $("#renderLists").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderLists").innerHTML);
     }
   });
 }
 
+//Sends the removed item ID to the server to update the database, and then updates the website
 function removeItem(obj){
   var item_id = findID(obj.id);
   const urlParams = new URLSearchParams(window.location.search);
@@ -94,27 +122,12 @@ function removeItem(obj){
     data: JSON.stringify(server_data),
     contentType: "application/json",
     success: function (result) {
-      $("html").html(result);
+      $("#renderItems").html((new DOMParser()).parseFromString(result, "text/html").querySelector("#renderItems").innerHTML);
     }
   });
 }
 
-function submitInsertItem(){
-  const urlParams = new URLSearchParams(window.location.search);
-  var id = urlParams.get("id");
-  var name = document.getElementById("insertItem").value;
-  var server_data = [{"name": name, "id": id}];
-  $.ajax({
-    type: "POST",
-    url: "/add_item",
-    data: JSON.stringify(server_data),
-    contentType: "application/json",
-    success: function (result) {
-      $("html").html(result);
-    }
-  });
-}
-
+//Makes the website only display items that contain the inputted name
 function submitSearchItem(){
   var searchName = document.getElementById("searchItem").value;
 
