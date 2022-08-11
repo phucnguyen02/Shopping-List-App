@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping List App</title>
+    <link rel="stylesheet" href="../static/css/styles.css"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <script src = "../static/js/app.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" 
+            integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+            crossorigin="anonymous" defer></script>
+    
+</head>
+<body>
+    <h1 id = "title">Shopping List Items</h1>
+    <meta id="my-data" data-name= "{{all_data}}">
+    
+    <div id = "searchBox">
+        <span>Search for an item:</span>
+        <input type = "text" id = "searchItem">
+        <input type = "submit" onclick = "submitSearchItem()">
+    </div>
+
+    {% if all_data is defined and all_data %}
+        {% for item in all_data %}
+            <div id = "menu{{ item[:item.index('/')] }}" class = "displayItems">
+                <ul>
+                    <li><span class = "itemName" id = "item{{ item[:item.index('/')] }}">{{ item[item.index(':')+2:] }}</span></li>
+                </ul>
+                <div class = "icons">
+                    <i onclick="showEditInput(this)" id = "editIcon{{ item[:item.index('/')] }}" class="fa fa-pencil-alt"></i>
+                    <i onclick="removeItem(this)" id = "remIcon{{ item[:item.index('/')] }}" class="fa fa-trash"></i>
+                </div>
+                <div id = "inputEditBox{{ item[:item.index('/')] }}" style = "display: none;">
+                    <label for = "editItem{{ item[item.index('/')] }}">New List Name:</label>
+                    <input type = "text" id = "editItem{{ item[:item.index('/')] }}">
+                    <input type = "submit" onclick = "editItem(this)" id = "submit{{ item[:item.index('/')] }}">
+                </div>
+            </div>
+            <br>
+        {% endfor %}
+    {% endif %} 
+
+    <div id = "insertRequest">
+        <i onclick="showInsertInput()" id = "insertButton" class="fa fa-plus-circle"></i>
+        <span>Add a new item</span>
+    </div>
+
+    <div id="inputInsertBox" style = "display: none;">
+        <input type = "text" id = "insertItem" name = "insertItem">
+        <input type = "submit" onclick = "submitInsertItem()">
+    </div>
+
+    
+</body>
+</html>
