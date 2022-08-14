@@ -16,7 +16,8 @@
 <body id = "body">
     <h1 id = "title">Simple Shopping List Web App</h1>
 
-    <div id = "displayLists">
+    <div id = "renderLists">
+        
         {% if all_data is defined and all_data %}
             {% for item in all_data %}
                 <div id = "menu{{ item[:item.index(':')] }}" class = "displayItems">
@@ -38,7 +39,6 @@
         {% endif %}
 
     </div>
-
     <div id = "insertRequest">
         <i onclick="showInsertInput()" id = "insertButton" class="fa fa-plus-circle"></i>
         <span>Add a new shopping list</span>
