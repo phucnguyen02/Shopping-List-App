@@ -15,25 +15,29 @@
 </head>
 <body id = "body">
     <h1 id = "title">Simple Shopping List Web App</h1>
-    {% if all_data is defined and all_data %}
-        {% for item in all_data %}
-            <div id = "menu{{ item[:item.index(':')] }}" class = "displayItems">
-                <ul>
-                    <a href = "{{ url_for('items') }}?id={{ item[:item.index(':')] }}" style = "cursor: pointer;" id = "list{{ item[:item.index(':')] }}"><li>{{ item[item.index(':')+2:] }}</li></a>
-                </ul> 
-                <div class = "icons">
-                    <i onclick="showEditInput(this)" id = "insIcon{{ item[:item.index(':')] }}" class="fa fa-pencil-alt"></i>
-                    <i onclick="removeList(this)" id = "remIcon{{ item[:item.index(':')] }}" class="fa fa-trash"></i>
+
+    <div id = "displayLists">
+        {% if all_data is defined and all_data %}
+            {% for item in all_data %}
+                <div id = "menu{{ item[:item.index(':')] }}" class = "displayItems">
+                    <ul>
+                        <a href = "{{ url_for('items') }}?id={{ item[:item.index(':')] }}" style = "cursor: pointer;" id = "list{{ item[:item.index(':')] }}"><li>{{ item[item.index(':')+2:] }}</li></a>
+                    </ul> 
+                    <div class = "icons">
+                        <i onclick="showEditInput(this)" id = "insIcon{{ item[:item.index(':')] }}" class="fa fa-pencil-alt"></i>
+                        <i onclick="removeList(this)" id = "remIcon{{ item[:item.index(':')] }}" class="fa fa-trash"></i>
+                    </div>
+                    <div id = "inputEditBox{{ item[:item.index(':')] }}" style = "display: none;">
+                        <label for = "editList{{ item[:item.index(':')] }}">New List Name:</label>
+                        <input type = "text" id = "editList{{ item[:item.index(':')] }}">
+                        <input type = "submit" onclick = "editList(this)" id = "submit{{ item[:item.index(':')] }}">
+                    </div>
                 </div>
-                <div id = "inputEditBox{{ item[:item.index(':')] }}" style = "display: none;">
-                    <label for = "editList{{ item[:item.index(':')] }}">New List Name:</label>
-                    <input type = "text" id = "editList{{ item[:item.index(':')] }}">
-                    <input type = "submit" onclick = "editList(this)" id = "submit{{ item[:item.index(':')] }}">
-                </div>
-            </div>
-            <br>
-        {% endfor %}
-    {% endif %}
+                <br>
+            {% endfor %}
+        {% endif %}
+
+    </div>
 
     <div id = "insertRequest">
         <i onclick="showInsertInput()" id = "insertButton" class="fa fa-plus-circle"></i>

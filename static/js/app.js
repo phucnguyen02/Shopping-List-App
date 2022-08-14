@@ -23,6 +23,22 @@ function submitInsertList(){
   });
 }
 
+function submitInsertItem(){
+  const urlParams = new URLSearchParams(window.location.search);
+  var id = urlParams.get("id");
+  var name = document.getElementById("insertItem").value;
+  var server_data = [{"name": name, "id": id}];
+  $.ajax({
+    type: "POST",
+    url: "/add_item",
+    data: JSON.stringify(server_data),
+    contentType: "application/json",
+    success: function (result) {
+      $("html").html(result);
+    }
+  });
+}
+
 function findID(str){
   var first_num = 0;
   for(let i = str.length - 1; i >= 0; i--)
@@ -91,22 +107,6 @@ function removeItem(obj){
   $.ajax({
     type: "POST",
     url: "/remove_item",
-    data: JSON.stringify(server_data),
-    contentType: "application/json",
-    success: function (result) {
-      $("html").html(result);
-    }
-  });
-}
-
-function submitInsertItem(){
-  const urlParams = new URLSearchParams(window.location.search);
-  var id = urlParams.get("id");
-  var name = document.getElementById("insertItem").value;
-  var server_data = [{"name": name, "id": id}];
-  $.ajax({
-    type: "POST",
-    url: "/add_item",
     data: JSON.stringify(server_data),
     contentType: "application/json",
     success: function (result) {
