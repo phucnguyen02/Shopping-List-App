@@ -37,7 +37,6 @@ def add_list():
 def add_item():
     db = g._database = sqlite3.connect('shopping_lists.db')
     cursor = db.cursor()
-    print("Data received: ", request.get_json()[0])
     new_name = request.get_json()[0]['name']
     list_id = request.get_json()[0]['id']
     cursor.execute("INSERT INTO shopping_items (list_id, name) VALUES (:id, :insert_name)", {
