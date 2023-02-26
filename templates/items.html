@@ -35,7 +35,7 @@
                         <i onclick="removeItem(this)" id = "remIcon{{ item[:item.index('/')] }}" class="fa fa-trash"></i>
                     </div>
                     <div id = "inputEditBox{{ item[:item.index('/')] }}" style = "display: none;">
-                        <label for = "editItem{{ item[item.index('/')] }}">New List Name:</label>
+                        <label for = "editItem{{ item[item.index('/')] }}">New Item Name:</label>
                         <input type = "text" id = "editItem{{ item[:item.index('/')] }}">
                         <input type = "submit" onclick = "editItem(this)" id = "submit{{ item[:item.index('/')] }}">
                     </div>
